@@ -1,0 +1,22 @@
+.footer {
+  background-color: var(--primary);
+}
+.container {
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 20px 0;
+}
+.info,
+.img_content {
+  margin: 0 30px;
+}
+.img_content {
+  width: 80px;
+}
+.img {
+  width: 100%;
+}
