@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
+
 import ArrowBack from "../../icons/ArrowBack";
 import styles from "./styles.module.css";
 
 const LoginPage = () => {
+  const [, setLocation] = useLocation();
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -36,11 +38,9 @@ const LoginPage = () => {
   return (
     <div className={styles.wraper}>
       <div className={styles.content}>
-        <Link href="/">
-          <a className={styles.volver}>
-            <ArrowBack />
-          </a>
-        </Link>
+        <button className={styles.volver} onClick={() => setLocation("/")}>
+          <ArrowBack />
+        </button>
         <h2 className={styles.h2}>Iniciar Sesión</h2>
         <form className={styles.form}>
           <div className={styles.formGroup}>

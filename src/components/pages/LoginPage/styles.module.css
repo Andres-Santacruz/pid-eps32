@@ -78,6 +78,9 @@
   color: #4e3ac2;
   cursor: pointer;
   width: 26px;
+  background: none;
+  border: none;
+  outline: none;
 }
 
 .btnSubmit {

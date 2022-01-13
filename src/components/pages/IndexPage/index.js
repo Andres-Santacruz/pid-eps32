@@ -15,7 +15,7 @@ const IndexPage = () => {
         <h1>CONTROL PID A UN SISTEMA BARRA - BOLA</h1>
         <p>Una plataforma para controlar un sistema físico</p>
         <div>
-          <button className={styles.btn} onClick={() => handleClick()}>
+          <button className={styles.btn} onClick={handleClick}>
             Comenzar
           </button>
         </div>
