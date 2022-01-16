@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "wouter";
+import { useUser } from "../../../hooks/useUser";
 import GraficaSimulacion from "../../GraficaSimulacion";
 
 import styles from "./styles.module.css";
 
 const DashboardPage = () => {
+  const { user } = useUser();
+  const [, setLocation] = useLocation();
+  console.log("userContext: dashboard", user);
+  useEffect(() => {
+    const stateOfUser = typeof user;
+    if (stateOfUser === "undefined") {
+      return;
+    }
+    console.log("es falso: ", user);
+    console.log("state: ", stateOfUser);
+
+    if (typeof user?.email === "undefined") {
+      setLocation("/login");
+    }
+  }, [user, setLocation]);
+
+  if (typeof user === "undefined") {
+    return (
+      <div className={styles.loading}>
+        <h2>Cargando...</h2>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.board}>
       <header className={styles.board__header}>

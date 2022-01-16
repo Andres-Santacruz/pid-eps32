@@ -1,3 +1,9 @@
+.loading {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 .board {
   max-width: 1200px;
   margin: 0 auto;
@@ -14,7 +20,7 @@
   text-align: center;
 }
 .board__content {
-  margin-top: 10px;
+  padding: 20px;
 }
 .panel {
   display: flex;
@@ -63,11 +69,11 @@
   width: 100%;
 }
 .panel__variables {
-  /* max-width: 500px; */
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 60px auto;
+  padding: 40px 5px;
+  margin: 0 auto;
 }
 .panel__variables__group:nth-child(2) {
   margin-bottom: 50px;
@@ -98,5 +104,17 @@
 .simulacion__tresd {
 }
 
-@media screen and (max-width: 1020px) {
+@media screen and (max-width: 900px) {
+  .panel {
+    flex-direction: column;
+  }
+  .form,
+  .panel__variables {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .panel__variables__group:nth-child(2) {
+    margin-bottom: 0px;
+  }
 }

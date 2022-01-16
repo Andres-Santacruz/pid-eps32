@@ -1,23 +1,19 @@
 import React, { useState } from "react";
 import { useLocation } from "wouter";
 
+import { useForm } from "../../../hooks/useForm";
+import { Login } from "../../../services/login-firebase";
+
 import ArrowBack from "../../icons/ArrowBack";
 import styles from "./styles.module.css";
 
 const LoginPage = () => {
   const [, setLocation] = useLocation();
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
+  const [values, onChange] = useForm();
   const [isError, setIsError] = useState({
     error: false,
     message: "",
   });
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-  };
 
   const onClickBtnError = () => {
     setIsError({ error: false, message: "" });
@@ -33,6 +29,25 @@ const LoginPage = () => {
       });
       return;
     }
+    if (password.length < 5) {
+      setIsError({
+        error: true,
+        message: "El código debe ser mayor a 5 caracteres",
+      });
+      return;
+    }
+    Login(email, password)
+      .then((res) => {
+        const { user } = res;
+        if (user.email === "superadmin@unicauca.edu.co") {
+          setLocation("/admin");
+        } else {
+          setLocation("/dashboard");
+        }
+      })
+      .catch((err) => {
+        setIsError({ error: true, message: err.message });
+      });
   };
 
   return (
