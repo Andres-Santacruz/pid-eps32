@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "wouter";
 import styles from "./styles.module.css";
 
 const Footer = () => {
@@ -7,11 +8,13 @@ const Footer = () => {
       <div className={styles.container}>
         <div className={styles.info}>Content</div>
         <div className={styles.img_content}>
-          <img
-            className={styles.img}
-            src="https://via.placeholder.com/150"
-            alt="logo"
-          />
+          <Link href="/">
+            <img
+              src="/logo.png"
+              alt="escudo de unicauca"
+              className={styles.logoImg}
+            />
+          </Link>
         </div>
       </div>
     </footer>

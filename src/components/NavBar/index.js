@@ -7,7 +7,13 @@ const NavBar = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.logo}>
-          <Link href="/">Logo</Link>
+          <Link href="/">
+            <img
+              src="/logo.png"
+              alt="escudo de unicauca"
+              className={styles.logoImg}
+            />
+          </Link>
         </div>
         <input type="checkbox" className={styles.input} id="input" />
         <label className={styles.hamburguer} htmlFor="input">
