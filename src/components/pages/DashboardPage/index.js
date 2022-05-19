@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation } from "wouter";
+import { logOut } from "../../../services/login-firebase";
 import { useUser } from "../../../hooks/useUser";
 import GraficaSimulacion from "../../GraficaSimulacion";
 
@@ -8,18 +9,22 @@ import styles from "./styles.module.css";
 const DashboardPage = () => {
   const { user } = useUser();
   const [, setLocation] = useLocation();
-  console.log("userContext: dashboard", user);
+  //console.log("userContext: dashboard", user);
   useEffect(() => {
     const stateOfUser = typeof user;
     if (stateOfUser === "undefined") {
       return;
     }
-    console.log("es falso: ", user);
-    console.log("state: ", stateOfUser);
+    //console.log("es falso: ", user);
+    //console.log("state: ", stateOfUser);
 
     if (typeof user?.email === "undefined") {
       setLocation("/login");
     }
+    return () => {
+      console.log("se ejecuta el return");
+      //logOut();
+    };
   }, [user, setLocation]);
 
   if (typeof user === "undefined") {
