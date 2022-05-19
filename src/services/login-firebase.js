@@ -3,9 +3,14 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   browserSessionPersistence,
+  signOut,
 } from "firebase/auth";
 
-export const Login = async (email, password) => {
+export const login = async (email, password) => {
   await setPersistence(auth, browserSessionPersistence);
   return await signInWithEmailAndPassword(auth, email, password);
+};
+
+export const logOut = async () => {
+  await signOut();
 };

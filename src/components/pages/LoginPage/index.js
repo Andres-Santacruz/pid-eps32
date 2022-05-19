@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "wouter";
 
 import { useForm } from "../../../hooks/useForm";
-import { Login } from "../../../services/login-firebase";
+import { login } from "../../../services/login-firebase";
 
 import ArrowBack from "../../icons/ArrowBack";
 import styles from "./styles.module.css";
@@ -36,7 +36,7 @@ const LoginPage = () => {
       });
       return;
     }
-    Login(email, password)
+    login(email, password)
       .then((res) => {
         const { user } = res;
         if (user.email === "superadmin@unicauca.edu.co") {
