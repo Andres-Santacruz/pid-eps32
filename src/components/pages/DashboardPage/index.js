@@ -1,29 +1,28 @@
 import React, { useEffect } from "react";
+//import { ref } from "firebase/database";
 import { useLocation } from "wouter";
-import { logOut } from "../../../services/login-firebase";
+//import { logOut } from "../../../services/login-firebase";
 import { useUser } from "../../../hooks/useUser";
 import GraficaSimulacion from "../../GraficaSimulacion";
 
 import styles from "./styles.module.css";
+import { setDataOnFirebase } from "../../../services/readData-firebase";
+import { useForm } from "../../../hooks/useForm";
 
 const DashboardPage = () => {
   const { user } = useUser();
   const [, setLocation] = useLocation();
-  //console.log("userContext: dashboard", user);
+  const [constPID, setConstPID] = useForm({ kp: 0, ki: 0, kd: 0 });
   useEffect(() => {
     const stateOfUser = typeof user;
     if (stateOfUser === "undefined") {
       return;
     }
-    //console.log("es falso: ", user);
-    //console.log("state: ", stateOfUser);
-
     if (typeof user?.email === "undefined") {
       setLocation("/login");
     }
     return () => {
       console.log("se ejecuta el return");
-      //logOut();
     };
   }, [user, setLocation]);
 
@@ -35,6 +34,17 @@ const DashboardPage = () => {
     );
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //setDataOnFirebase("");
+    const kp = parseFloat(constPID.kp);
+    const ki = parseFloat(constPID.ki);
+    const kd = parseFloat(constPID.kd);
+    const myData = { kp, ki, kd, isConnected: true, data: "" };
+    console.log("vealas  ", myData);
+    setDataOnFirebase(myData);
+  };
+
   return (
     <div className={styles.board}>
       <header className={styles.board__header}>
@@ -43,18 +53,36 @@ const DashboardPage = () => {
       <div className={styles.board__content}>
         <div className={styles.panel}>
           <div className={styles.panel__consts}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.form__group}>
                 <label className={styles.form__label}>constante P:</label>
-                <input className={styles.form__input} type="number" />
+                <input
+                  className={styles.form__input}
+                  name="kp"
+                  type="number"
+                  value={constPID.kp}
+                  onChange={setConstPID}
+                />
               </div>
               <div className={styles.form__group}>
                 <label className={styles.form__label}>constante I:</label>
-                <input className={styles.form__input} type="number" />
+                <input
+                  className={styles.form__input}
+                  name="ki"
+                  value={constPID.ki}
+                  onChange={setConstPID}
+                  type="number"
+                />
               </div>
               <div className={styles.form__group}>
                 <label className={styles.form__label}>constante D:</label>
-                <input className={styles.form__input} type="number" />
+                <input
+                  className={styles.form__input}
+                  name="kd"
+                  value={constPID.kd}
+                  onChange={setConstPID}
+                  type="number"
+                />
               </div>
               <div className={styles.form__group}>
                 <button className={styles.form__button} type="submit">

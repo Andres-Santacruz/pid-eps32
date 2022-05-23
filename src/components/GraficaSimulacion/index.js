@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { db } from "../../firebase/firebase-config";
+import { ref, onValue } from "firebase/database";
 
 import {
   LineChart,
@@ -8,10 +10,9 @@ import {
   YAxis,
   ReferenceLine,
 } from "recharts";
-import { getDataOnFirebase } from "../../services/readData-firebase";
 import styles from "./styles.module.css";
 
-const data = [
+/* const data = [
   {
     name: 1,
     uv: 0,
@@ -62,23 +63,53 @@ const data = [
     uv: 2500,
     li: 2500,
   },
-];
+]; */
 
 const GraficaSimulacion = () => {
-  const [dataPid, setDataPid] = useState([]);
+  const [dataToGraphics, setDataToGraphics] = useState(null);
+  const [dataPid, setDataPid] = useState(undefined);
+
   useEffect(() => {
-    const dataF = getDataOnFirebase();
-    if (dataF[0] !== undefined) {
-      const json = dataF[0].map((el, i) => {
-        return { [i]: el };
-      });
-      setDataPid(json);
-    }
+    onValue(ref(db), (snapShot) => {
+      const datos = snapShot.val();
+      setDataPid(datos.test);
+    });
   }, []);
-  console.log(dataPid);
+
+  /*   useEffect(() => {
+    getDataOnFirebase().then((data) => {
+      setDataPid(data);
+      console.log("data: ", data);
+    });
+  }, []); */
+
+  useEffect(() => {
+    console.log("redner data pido: ", dataPid);
+    const arrayData = dataPid
+      ? dataPid.data.length > 0
+        ? dataPid.data.split("-")
+        : null
+      : null;
+    const arrayDataPid = arrayData
+      ? arrayData.map((item, i) => ({
+          name: i,
+          uv: parseFloat(item),
+        }))
+      : null;
+    console.log("veamos esto : ", arrayData);
+    setDataToGraphics(arrayDataPid);
+  }, [dataPid]);
+
+  if (!dataToGraphics) {
+    return (
+      <div className={styles.loading}>
+        <h2>Cargando...</h2>
+      </div>
+    );
+  }
   return (
     <div className={styles.content}>
-      <LineChart width={600} height={300} data={data}>
+      <LineChart width={600} height={300} data={dataToGraphics}>
         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
         <ReferenceLine y={2700} stroke="red" label="Set Point" />
         <CartesianGrid stroke="#ccc" />
