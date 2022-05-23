@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
-        <div className={styles.info}>Content</div>
+        <div className={styles.info}>Políticas de privacidad y de más</div>
         <div className={styles.img_content}>
           <Link href="/">
             <img
